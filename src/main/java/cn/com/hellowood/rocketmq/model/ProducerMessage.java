@@ -6,7 +6,7 @@ package cn.com.hellowood.rocketmq.model;
  * @email hellowoodes@outlook.com
  **/
 
-public class ProducerMessage {
+public class ProducerMessage<T> {
 
     private String topic;
 
@@ -14,12 +14,12 @@ public class ProducerMessage {
 
     private String key;
 
-    private Object body;
+    private T body;
 
     public ProducerMessage() {
     }
 
-    public ProducerMessage(String topic, String tags, String key, Object body) {
+    public ProducerMessage(String topic, String tags, String key, T body) {
         this.topic = topic;
         this.tags = tags;
         this.key = key;
@@ -50,11 +50,11 @@ public class ProducerMessage {
         this.key = key;
     }
 
-    public Object getBody() {
+    public T getBody() {
         return body;
     }
 
-    public void setBody(Object body) {
+    public void setBody(T body) {
         this.body = body;
     }
 }

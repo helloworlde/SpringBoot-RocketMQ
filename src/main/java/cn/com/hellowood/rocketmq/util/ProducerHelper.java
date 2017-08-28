@@ -27,37 +27,31 @@ public class ProducerHelper {
 
     private Producer producer;
 
-    private boolean producerStarted = false;
-
     /**
      * Initialize producer for multiple message send
      */
     public void initializeProducer() {
-        if (!producerStarted) {
-            long start = System.currentTimeMillis();
+        long startTimestamp = System.currentTimeMillis();
+        logger.info("Producer initialize started");
 
-            Properties properties = new Properties();
-            properties.put(PropertyKeyConst.ProducerId, configProperties.getProducerId());
-            properties.put(PropertyKeyConst.AccessKey, configProperties.getAccessKey());
-            properties.put(PropertyKeyConst.SecretKey, configProperties.getSecretKey());
-            properties.put(PropertyKeyConst.ONSAddr, configProperties.getONSAddresses());
-            producer = ONSFactory.createProducer(properties);
-            producer.start();
+        Properties properties = new Properties();
+        properties.put(PropertyKeyConst.ProducerId, configProperties.getProducerId());
+        properties.put(PropertyKeyConst.AccessKey, configProperties.getAccessKey());
+        properties.put(PropertyKeyConst.SecretKey, configProperties.getSecretKey());
+        properties.put(PropertyKeyConst.ONSAddr, configProperties.getONSAddresses());
 
-            producerStarted = true;
-            long costTime = System.currentTimeMillis() - start;
-            logger.debug("Producer initialize completed in " + costTime + " ms");
-        }
+        producer = ONSFactory.createProducer(properties);
+        producer.start();
+
+        long costTime = System.currentTimeMillis() - startTimestamp;
+        logger.info("Producer initialize completed in " + costTime + " ms");
     }
 
     /**
      * To shut down producer
      */
     public void shutDownProducer() {
-        if (producerStarted) {
-            producer.shutdown();
-            producerStarted = false;
-        }
+        producer.shutdown();
     }
 
     /**
@@ -67,9 +61,7 @@ public class ProducerHelper {
      * @return
      */
     public SendResult sendNormalMessage(ProducerMessage producerMessage) {
-        long start = System.currentTimeMillis();
-
-        initializeProducer();
+        long startTimestamp = System.currentTimeMillis();
 
         Message msg = new Message();
         msg.setTopic(producerMessage.getTopic());
@@ -79,8 +71,8 @@ public class ProducerHelper {
 
         SendResult sendResult = producer.send(msg);
 
-        long costTime = System.currentTimeMillis() - start;
-        logger.debug("Producer send normal message completed in " + costTime + " ms");
+        long costTime = System.currentTimeMillis() - startTimestamp;
+        logger.info("Producer send normal message completed in " + costTime + " ms");
 
         return sendResult;
     }

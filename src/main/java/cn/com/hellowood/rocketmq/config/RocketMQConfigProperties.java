@@ -19,7 +19,11 @@ public class RocketMQConfigProperties {
 
     private String secretKey;
 
+    private String topic;
+
     private String producerId;
+
+    private String consumerId;
 
     public String getONSAddresses() {
         return ONSAddresses;
@@ -51,5 +55,21 @@ public class RocketMQConfigProperties {
 
     public void setProducerId(String producerId) {
         this.producerId = producerId;
+    }
+
+    public String getConsumerId() {
+        return consumerId;
+    }
+
+    public void setConsumerId(String consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }
