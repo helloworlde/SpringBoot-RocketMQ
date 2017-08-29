@@ -1,0 +1,27 @@
+language: java
+jdk:
+- oraclejdk8
+env:
+  global:
+  - TERM=dumb
+  - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
+branches:
+  only:
+  - master
+install:
+- true
+notifications:
+  slack:
+    on_success: change
+    on_failure: change
+    slack: hellowood:3qHqpWCi2LQV4MsQYPsHJBK6
+deploy:
+  provider: releases
+  api_key:
+    secure: G4sI50C4HEsITEhqUzOl9UthS4gpRcX0k8THXf6+wBggt+DxGwq3MFp+2nbmXCCHWH/81FJMAAuFqYG6VrqmA8+93QwXEL0KuPSLPHFzJih1VJ9fNRc4vmE9/fvnmX630ltRGAA6Y3slmQakgXxC15QHZQ1zlTyNlNzYp0Q1FF4h0MhI8Lw3Ic9nrZcK5jYSUB8l8zQIkV5R8HeefyLj5OXANw8BHb/PpgTbwrsgRPgEgm3cvzskKZl4hXzq+LNp+C1bm3YuRk0H5ithyv31bdDMhzeTSpEuRttapc+WkxTiOxy21KNng1nNGVu2gquv30O3EC4jhgp6zKLYWwQ7a7hcq6Qs12uMdnG/5KBgfCFoQyp5PXrd1AG+sCv9Vw6XI7LfWyjazMEy1RmxF6Wp3eCZbfcogHy4mnl/7MWpEvQiUL7I1whDlBeXYYUTmsW7EgBtPYwh2kW49wdKTsG2YgnyZx6xvnC6XCXPL7FYc2Q4m7t1HN9tFSMOFLKNIeJsIJ6+/qo6zYuC6PBD77TM8kOXzuyphDjlsuyKPq9waDZImbLGkDduyWfcERBKEYUPdUnEugkh64LALkuUhWgfYRLt0ikEEKrwrUr+s/73Hz9ZZoLcrUwdFu3CQuwBOTtQT5gy171OjhYGor5iJWlU+vNXDTGAQMzRP+QgIDqzOFE=
+  file: build/libs/RocketMQ-0.0.1-SNAPSHOT.jar
+  skip_cleanup: true
+  on:
+    tags: true
+before_install:
+- chmod +x gradlew
