@@ -1,4 +1,4 @@
-package cn.com.hellowood.rocketmq.listenerimpl;
+package cn.com.hellowood.rocketmq.handler;
 
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.ConsumeContext;
@@ -15,10 +15,17 @@ import org.springframework.stereotype.Component;
  **/
 
 @Component
-public class NormalMessageListenerImpl implements MessageListener {
+public class ConsumerHandler implements MessageListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(NormalMessageListenerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConsumerHandler.class);
 
+    /**
+     * Message consumer handler
+     *
+     * @param message
+     * @param context
+     * @return
+     */
     @Override
     public Action consume(Message message, ConsumeContext context) {
         logger.info("Consumer get new normal message [{}]", message);

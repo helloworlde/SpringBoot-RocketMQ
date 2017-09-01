@@ -30,6 +30,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.alibaba.rocketmq:rocketmq-client:3.6.2.Final')
     compile('com.aliyun.openservices:ons-client:1.6.0.Final')
+    compile ('org.apache.commons:commons-lang3:3.6')
     runtime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

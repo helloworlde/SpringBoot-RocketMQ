@@ -1,7 +1,7 @@
 package cn.com.hellowood.rocketmq.util;
 
 import cn.com.hellowood.rocketmq.config.RocketMQConfigProperties;
-import cn.com.hellowood.rocketmq.listenerimpl.NormalMessageListenerImpl;
+import cn.com.hellowood.rocketmq.handler.ConsumerHandler;
 import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
@@ -27,7 +27,7 @@ public class ConsumerHelper {
     RocketMQConfigProperties configProperties;
 
     @Autowired
-    NormalMessageListenerImpl normalMessageListener;
+    ConsumerHandler normalMessageListener;
 
     private Consumer consumer;
 

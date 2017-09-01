@@ -1,7 +1,6 @@
 package cn.com.hellowood.rocketmq.util;
 
 import cn.com.hellowood.rocketmq.config.RocketMQConfigProperties;
-import cn.com.hellowood.rocketmq.model.ProducerMessage;
 import com.alibaba.rocketmq.shade.com.alibaba.fastjson.JSON;
 import com.aliyun.openservices.ons.api.*;
 import org.slf4j.Logger;
@@ -55,26 +54,71 @@ public class ProducerHelper {
     }
 
     /**
-     * Send normal message
+     * Send SYNCHRONOUS message
      *
-     * @param producerMessage
+     * @param message
      * @return
      */
-    public SendResult sendNormalMessage(ProducerMessage producerMessage) {
+    public SendResult sendSynchronousMessage(Message message) {
+        logger.info("MQ start send SYNCHRONOUS message ");
+
         long startTimestamp = System.currentTimeMillis();
 
-        Message msg = new Message();
-        msg.setTopic(producerMessage.getTopic());
-        msg.setTag(producerMessage.getTags());
-        msg.setKey(producerMessage.getKey());
-        msg.setBody(JSON.toJSONString(producerMessage.getBody()).getBytes());
-
-        SendResult sendResult = producer.send(msg);
+        message.setTopic(String.valueOf(configProperties.getTopic()));
+        SendResult sendResult = producer.send(message);
 
         long costTime = System.currentTimeMillis() - startTimestamp;
-        logger.info("Producer send normal message completed in " + costTime + " ms");
+        logger.info("MQ completed send SYNCHRONOUS message in " + costTime + " ms");
 
         return sendResult;
     }
 
+    /**
+     * 发送单向消息
+     *
+     * @param message
+     * @return
+     */
+    public SendResult sendOneWayMessage(Message message) {
+        logger.info("MQ start send ONE_WAY message ");
+
+        long startTimestamp = System.currentTimeMillis();
+
+        message.setTopic(String.valueOf(configProperties.getTopic()));
+        producer.sendOneway(message);
+        long costTime = System.currentTimeMillis() - startTimestamp;
+        logger.info("MQ completed send ONE_WAY message in " + costTime + " ms");
+
+        return null;
+    }
+
+    /**
+     * Send ASYNCHRONOUS message
+     *
+     * @param message
+     * @return
+     */
+    public SendResult sendAsynchronousMessage(Message message) {
+        logger.info("MQ start send ASYNCHRONOUS message ");
+
+        long startTimestamp = System.currentTimeMillis();
+        message.setTopic(String.valueOf(configProperties.getTopic()));
+
+        producer.sendAsync(message, new SendCallback() {
+            @Override
+            public void onSuccess(final SendResult sendResult) {
+                logger.info("MQ send ASYNCHRONOUS message successed，response is " + JSON.toJSONString(sendResult));
+            }
+
+            @Override
+            public void onException(OnExceptionContext onExceptionContext) {
+                logger.info("MQ send ASYNCHRONOUS message failed, error is " + onExceptionContext.getException().getMessage());
+            }
+        });
+
+        long costTime = System.currentTimeMillis() - startTimestamp;
+        logger.info("MQ completed send ASYNCHRONOUS message in " + costTime + " ms");
+
+        return null;
+    }
 }

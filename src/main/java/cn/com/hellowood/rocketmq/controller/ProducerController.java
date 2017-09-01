@@ -21,22 +21,13 @@ public class ProducerController {
     private ProducerService producerService;
 
     /**
-     * Send normal message, message request method should be POST and
-     * request body should like this:
-     * <code>
-     * {
-     * "topic":"YOUR_TOPIC",
-     * "body":"YOUR_MESSAGE",
-     * "key":"YOUR_KEY",
-     * "tags":"YOUR_TAG"
-     * }
-     * </code>
+     * Send message
      *
      * @param producerMessage
      * @return
      */
-    @PostMapping("/sendNormalMessage")
-    public SendResult sendNormalMessage(@RequestBody ProducerMessage producerMessage) {
-        return producerService.sendNormalMessage(producerMessage);
+    @PostMapping("/sendMessage")
+    public SendResult sendMessage(@RequestBody ProducerMessage producerMessage) {
+        return producerService.sendMessage(producerMessage);
     }
 }

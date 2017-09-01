@@ -1,4 +1,4 @@
-package cn.com.hellowood.rocketmq.listenerimpl;
+package cn.com.hellowood.rocketmq.handler;
 
 import cn.com.hellowood.rocketmq.config.RocketMQConfigProperties;
 import cn.com.hellowood.rocketmq.util.ConsumerHelper;
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
  **/
 
 @Component
-public class CommandLineRunnerListenerImpl implements CommandLineRunner {
+public class CommandLineRunnerHandler implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommandLineRunnerListenerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommandLineRunnerHandler.class);
 
     @Autowired
     RocketMQConfigProperties configProperties;
@@ -29,6 +29,11 @@ public class CommandLineRunnerListenerImpl implements CommandLineRunner {
     @Autowired
     ConsumerHelper consumerHelper;
 
+    /**
+     * For initialize Producer and Consumer when application startup
+     * @param args
+     * @throws Exception
+     */
     @Override
     public void run(String... args) throws Exception {
         long startTimestamp = System.currentTimeMillis();
