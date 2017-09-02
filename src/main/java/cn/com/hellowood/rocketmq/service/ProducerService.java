@@ -89,6 +89,7 @@ public class ProducerService {
         Message msg = new Message();
         msg.setTag(producerMessage.getTags());
         msg.setKey(producerMessage.getKey());
+        msg.setTopic(producerMessage.getTopic());
         msg.setBody(JSON.toJSONString(producerMessage.getBody()).getBytes());
 
         switch (producerMessage.getType()) {

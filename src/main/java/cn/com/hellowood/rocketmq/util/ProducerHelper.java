@@ -64,7 +64,6 @@ public class ProducerHelper {
 
         long startTimestamp = System.currentTimeMillis();
 
-        message.setTopic(String.valueOf(configProperties.getTopic()));
         SendResult sendResult = producer.send(message);
 
         long costTime = System.currentTimeMillis() - startTimestamp;
@@ -84,7 +83,6 @@ public class ProducerHelper {
 
         long startTimestamp = System.currentTimeMillis();
 
-        message.setTopic(String.valueOf(configProperties.getTopic()));
         producer.sendOneway(message);
         long costTime = System.currentTimeMillis() - startTimestamp;
         logger.info("MQ completed send ONE_WAY message in " + costTime + " ms");
@@ -102,7 +100,6 @@ public class ProducerHelper {
         logger.info("MQ start send ASYNCHRONOUS message ");
 
         long startTimestamp = System.currentTimeMillis();
-        message.setTopic(String.valueOf(configProperties.getTopic()));
 
         producer.sendAsync(message, new SendCallback() {
             @Override
