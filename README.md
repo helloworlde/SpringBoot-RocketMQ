@@ -33,11 +33,12 @@ spring.rocketmq.consumerId=订阅者
 
 |参数名|必选|类型|说明|
 |:----    |:---|:----- |-----   |
+|topic |是  |String | 消息Topic   |
 |body |是  |String | 消息所携带的数据，可以是对象的JSON串   |
 |key |是  |String | 32位key    |
 |tags     |否  |String | Message Tag，用于过滤订阅者过滤消息    |
-|method     |否  |String | 消息发送方式，共有三种：同步发送：`SYNCHRONOUS`，异步发送：`ASYNCHRONOUS`, 单向发送：`ONE_WAY` ,默认使用同步发送方式发送消息   |
-|type     |否  |String |消息类型，共有三种：顺序消息：`ORDER`，延时消息：`DELAY`，定时消息：`TIMING`，默认发送顺序消息|
+|method     |是  |String | 消息发送方式，共有三种：同步发送：`SYNCHRONOUS`，异步发送：`ASYNCHRONOUS`, 单向发送：`ONE_WAY` ,默认使用同步发送方式发送消息   |
+|type     |是  |String |消息类型，共有三种：顺序消息：`ORDER`，延时消息：`DELAY`，定时消息：`TIMING`，默认发送顺序消息|
 |delayTime     |否  |long | 消息发送延时时间，单位是毫秒    |
 |startDeliveryTime     |否  |String | 定时消息发送时间，必须是`yyyy-MM-dd HH:mm:ss`格式    |
 
