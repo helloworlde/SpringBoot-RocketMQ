@@ -7,6 +7,7 @@ import cn.com.hellowood.rocketmq.util.RocketMQServiceUtil;
 import com.alibaba.rocketmq.shade.com.alibaba.fastjson.JSON;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.SendResult;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,12 @@ public class ProducerService {
      */
     private SendResult sendMessage(Message message, ProducerMessage producerMessage) {
         SendResult sendResult = null;
+
+        // Make sure method is valid
+        if (StringUtils.isEmpty(producerMessage.getMethod())) {
+            producerMessage.setMethod(RocketMQServiceConstant.SYNCHRONOUS_MESSAGE);
+        }
+
         switch (producerMessage.getMethod()) {
             // Send message in ASYNCHRONOUS method
             case RocketMQServiceConstant.ASYNCHRONOUS_MESSAGE:
@@ -91,6 +98,11 @@ public class ProducerService {
         msg.setKey(producerMessage.getKey());
         msg.setTopic(producerMessage.getTopic());
         msg.setBody(JSON.toJSONString(producerMessage.getBody()).getBytes());
+
+        // make sure message type is valid
+        if (StringUtils.isEmpty(producerMessage.getType())) {
+            producerMessage.setType(RocketMQServiceConstant.ORDER_MESSAGE);
+        }
 
         switch (producerMessage.getType()) {
             // Generate Delay message
